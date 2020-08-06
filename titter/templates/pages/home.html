@@ -1,9 +1,63 @@
-{% extends 'base.html' %}
+{% extends "pages/base.html" %}
 
 {% block head_title %} 
-I wish this worked im at home.html
+- We Scribble you Giggle
 {% endblock head_title %}
 
 {% block content %}
+
 Another message in home.html
+
+<div id='posts'>
+  Loading...
+</div>
+
+<script>
+  // get an html element
+  const postsElement = document.getElementById("posts")
+
+  const xhr = new XMLHttpRequest() // let xhr = new SomeClass()
+  const method = 'GET'
+  const url = "/posts"
+  const responseType = "json"
+
+  function handleDidLike (post_id, currentCount) {
+    console.log(post_id, currentCount)
+  }
+
+  function LikeBtn(post) {
+    return "<button class='btn btn-primary' onclick=handleDidLike(" +
+    post.id + "," + post.likes + ")>Like</button>"
+  }
+
+  function formatPostElement(post) {
+    let formattedPost = "<div class='mb-4 post' id='post-" + post.id 
+    + "'><p>" + post.content + 
+        "</p><div class='btn-group'>" + LikeBtn(post) +
+
+        "</div></div>"
+    return formattedPost 
+  }
+  xhr.responseType = responseType
+  xhr.open(method, url)
+  xhr.onload = function() {
+    console.log(xhr.response)
+    const serverResponse = xhr.response
+    const listedItems = serverResponse.response
+    let finalPostStr = ""
+    let i = 0
+    for (i = 0; i < listedItems.length; i++) {
+        console.log(i)
+        console.log(listedItems[i])
+        let postObj = listedItems[i] 
+        let currentItem = formatPostElement(postObj)
+          finalPostStr += currentItem
+    }
+    postsElement.innerHTML = finalPostStr
+    // console.log(listedItems)
+  }
+  xhr.send()
+
+</script>
+
 {% endblock content %}

@@ -1,3 +1,4 @@
+import random
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
 from .models import Post
@@ -10,8 +11,9 @@ def home_page(request, *args, **kwargs):
 def post_list_view(request, *args, **kwargs):
     """REST API VIEW return Json data, consume by react"""
     list = Post.objects.all()
-    post_list = [{"id": post.id, "content": post.content} for post in list]
+    post_list = [{"id": post.id, "content": post.content, "likes": random.randint(0, 14325357)} for post in list]
     data = {
+        "isUser": False,
         "response": post_list
     }
     return JsonResponse(data)
