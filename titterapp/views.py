@@ -4,13 +4,11 @@ from .models import Post
 # Create your views here.
 
 def home_page(request, *args, **kwargs):
-      print(args, kwargs)
       # return HttpResponse('<h1>Hi<h1/>')
       return render(request, "pages/home.html", context={}, status=200)
     
 
 def post_detail(request, post_id, *args, **kwargs):
-    print(args, kwargs)
     """REST API VIEW return Json data, consume by react"""
     data = {
         "id": post_id,
