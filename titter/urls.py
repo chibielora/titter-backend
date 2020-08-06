@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from titterapp.views import home_page, post_detail
+from titterapp.views import home_page, post_detail, post_list_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page),
+    path('posts', post_list_view),
     path('posts/<int:post_id>', post_detail),
 ]

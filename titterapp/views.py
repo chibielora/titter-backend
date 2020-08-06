@@ -7,6 +7,14 @@ def home_page(request, *args, **kwargs):
       # return HttpResponse('<h1>Hi<h1/>')
       return render(request, "pages/home.html", context={}, status=200)
     
+def post_list_view(request, *args, **kwargs):
+    """REST API VIEW return Json data, consume by react"""
+    list = Post.objects.all()
+    post_list = [{"id": post.id, "content": post.content} for post in list]
+    data = {
+        "response": post_list
+    }
+    return JsonResponse(data)
 
 def post_detail(request, post_id, *args, **kwargs):
     """REST API VIEW return Json data, consume by react"""
